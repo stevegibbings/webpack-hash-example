@@ -9,7 +9,7 @@ I now understand why app content changes, the map it holds is needed to map modu
 
 ## Summary
 
-To show what hashes change in two test cases with webpack 2.6.1. Based on the current as of writing webpack (recommend)[https://webpack.js.org/guides/caching/#deterministic-hashes] approach.
+To show what hashes change in two test cases with webpack 2.6.1. Based on the current as of writing webpack [recommend](https://webpack.js.org/guides/caching/#deterministic-hashes) approach.
 
 Using -
 
@@ -40,7 +40,7 @@ Chunks change even when the view they are generated from haven't changed. I see 
 
 #Outcome
 
-I came into this to solve a clash of hashes where file content had actually changed. I had used (an article)[https://medium.com/@okonetchnikov/long-term-caching-of-static-assets-with-webpack-1ecb139adb95] from July 2015 that explained webpack used the source rather than output contents to generate the hash. webpack-md5-hash was used to change to output content to generate hashes. However that sometimes didn't get the hashes right for changed output files where only module ids had changed. This happened sometime after the site had been stable but we'd upgraded to webpack 2.x. Could have been a breaking change in webpack.
+I came into this to solve a clash of hashes where file content had actually changed. I had used [an article](https://medium.com/@okonetchnikov/long-term-caching-of-static-assets-with-webpack-1ecb139adb95) from July 2015 that explained webpack used the source rather than output contents to generate the hash. webpack-md5-hash was used to change to output content to generate hashes. However that sometimes didn't get the hashes right for changed output files where only module ids had changed. This happened sometime after the site had been stable but we'd upgraded to webpack 2.x. Could have been a breaking change in webpack.
 
 The webpack recommendation does look like it solves the hash clash however it also generates new hashes for unchanged output files. Having hashed files is important to leverage browser cache so that the new file is requested only when the file changes. I am going with this as my first option to solve the hash clash causing issues. Below I tried other options and seemed to get better results for my current use cases. I am concerned about using that in production before having understood why and if it is going to be consistent and stable.
 
@@ -48,6 +48,5 @@ I tried two alternatives in config to try to improve this -
 
 1. Adding webpack-chunk-hash-plugin. This resulted in an improvement for case 2 where vendor kept its hash. However in case 3 app and vendor files changed but without a different hash.
 
-2. In addition to 1 above removed hashed-module-id-plugin. This gave the same benefit to case 2. In case 3 all hashes changed. So it would seem this would be the better option if keeping cached files valid as long as possible is important. There may be cases where hashed-module-id-plugin is necessary and the webpack docs (recommend it)[https://webpack.js.org/guides/caching/#deterministic-hashes]
-
+2. In addition to 1 above removed hashed-module-id-plugin. This gave the same benefit to case 2. In case 3 all hashes changed. So it would seem this would be the better option if keeping cached files valid as long as possible is important. There may be cases where hashed-module-id-plugin is necessary and the webpack docs recommend it.
 

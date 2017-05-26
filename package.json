@@ -1,0 +1,21 @@
+{
+  "name": "webpack-hash-example",
+  "version": "1.0.0",
+  "description": "Example project to show behaviour of webpack hashes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "chunk-manifest-webpack-plugin": "^1.1.0",
+    "pubsub-js": "^1.5.7",
+    "webpack": "^2.6.1",
+    "webpack-chunk-hash": "^0.4.0",
+    "webpack-manifest-plugin": "^1.1.0"
+  }
+}
